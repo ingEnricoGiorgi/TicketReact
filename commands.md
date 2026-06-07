@@ -10,3 +10,5 @@ npx shadcn@4.9.0 init <-----------------
 
 npm install tailwindcss @tailwindcss/vite
 npm install -D vite-tsconfig-paths
+
+npm list @tailwindcss/vite
