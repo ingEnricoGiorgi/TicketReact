@@ -27,3 +27,24 @@ npx shadcn@latest add dropdown-menu
 crea alis in ts config e vite config 
 + src/lib/utils.ts
 npm install clsx tailwind-merge
+
+
+
+npm init -y
+
+npm install express mysql2 cors dotenv axios
+npm install --save-dev nodemon
+
+mkdir config routes controllers services
+
+touch server.js
+touch .env
+touch config/db.js
+touch routes/tickets.js
+touch controllers/ticketController.js
+touch services/n8nService.js
+
+npm install express mysql2 cors dotenv
+npm install --save-dev nodemon
+
+node server.js
