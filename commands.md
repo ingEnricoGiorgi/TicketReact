@@ -47,4 +47,13 @@ touch services/n8nService.js
 npm install express mysql2 cors dotenv
 npm install --save-dev nodemon
 
+cd ticketing-app/backend  <---------------------- AVVIO SERVER
 node server.js
+
+
+se vuoi evitare di riavviare ogni volta il server
+
+Utente@DESKTOP-BK73TGE MINGW64 ~/Documents/GitHub/TicketReact/ticketing-app (main)
+npm install --save-dev nodemon
+
+npm install mysql2
