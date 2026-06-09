@@ -57,3 +57,4 @@ Utente@DESKTOP-BK73TGE MINGW64 ~/Documents/GitHub/TicketReact/ticketing-app (mai
 npm install --save-dev nodemon
 
 npm install mysql2
+npm install cors

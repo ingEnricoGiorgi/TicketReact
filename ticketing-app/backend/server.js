@@ -3,17 +3,30 @@ const db = require('./config/db');
 
 const app = express();
 
-db.query('SELECT 1', (err) => {
+app.use(express.json());
 
-    if (err) {
-        console.error('Errore MySQL:', err);
-    } else {
-        console.log('MySQL connesso');
-    }
-});
+app.post('/api/tickets', (req, res) => {
 
-app.get('/', (req, res) => {
-    res.send('Backend OK');
+    const { title, category, description } = req.body;
+
+    db.query(
+        'INSERT INTO tickets (title, category, description) VALUES (?, ?, ?)',
+        [title, category, description],
+        (err, result) => {
+
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    success: false
+                });
+            }
+
+            res.json({
+                success: true,
+                id: result.insertId
+            });
+        }
+    );
 });
 
 app.listen(3000, () => {
