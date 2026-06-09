@@ -56,5 +56,8 @@ se vuoi evitare di riavviare ogni volta il server
 Utente@DESKTOP-BK73TGE MINGW64 ~/Documents/GitHub/TicketReact/ticketing-app (main)
 npm install --save-dev nodemon
 
+poi starto dalla cartella backend con
+npm run dev
+
 npm install mysql2
 npm install cors
