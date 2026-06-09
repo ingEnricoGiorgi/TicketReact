@@ -61,3 +61,7 @@ npm run dev
 
 npm install mysql2
 npm install cors
+
+--------------------------------------------------------n8n-----------------------------------
+
+npm install -g n8n    GLOBALMENTE

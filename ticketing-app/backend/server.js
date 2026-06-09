@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
-
+const axios = require('axios');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.post('/api/tickets', (req, res) => {
     db.query(
         'INSERT INTO tickets (title, category, description) VALUES (?, ?, ?)',
         [title, category, description],
-        (err, result) => {
+        async (err, result) => {
 
             if (err) {
                 console.error(err);
@@ -28,6 +28,25 @@ app.post('/api/tickets', (req, res) => {
                     success: false
                 });
             }
+
+            //axios start
+            //webhook n8n
+            try {
+
+                    await axios.post(
+                        'http://localhost:5678/webhook-test/ticket',
+                        {
+                            id: result.insertId,
+                            title,
+                            category,
+                            description
+                        }
+                    );
+
+                } catch (e) {
+                console.error('Errore webhook n8n:', e.message);
+            }
+            //axios end
 
             res.json({
                 success: true,
