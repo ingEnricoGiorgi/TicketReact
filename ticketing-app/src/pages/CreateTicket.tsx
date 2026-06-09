@@ -11,6 +11,11 @@ export default function CreateTicket() {
 
     const createTicket = async () => {
 
+        if (!title || !category || !description) {
+            alert('Compila tutti i campi');
+            return;
+        }
+
         const response = await fetch(
             "http://localhost:3000/api/tickets",
             {
@@ -43,7 +48,7 @@ export default function CreateTicket() {
         <div className="min-h-screen bg-slate-50 p-8">
             <div className="max-w-3xl mx-auto">
 
-                <h1 className="text-4xl font-bold mb-8">
+                <h1 className="text-4xl font-bold mb-8 text-center">
                     Nuovo Ticket
                 </h1>
 

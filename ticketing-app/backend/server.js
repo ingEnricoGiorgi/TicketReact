@@ -10,6 +10,12 @@ app.use(cors());
 app.post('/api/tickets', (req, res) => {
 
     const { title, category, description } = req.body;
+    if (!title || !category || !description) {
+    return res.status(400).json({
+        success: false,
+        message: 'Tutti i campi sono obbligatori'
+    });
+}
 
     db.query(
         'INSERT INTO tickets (title, category, description) VALUES (?, ?, ?)',
