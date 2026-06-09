@@ -50,4 +50,4 @@ Il progetto è attualmente in fase di sviluppo e viene utilizzato come laborator
 
 ## Autore
 
-Enrico Tinti
+Enrico Giorgi
