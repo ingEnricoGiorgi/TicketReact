@@ -51,6 +51,49 @@ export default function CreateTicket() {
         }
     };
 
+    //OPEN AI
+    const sendMessage = async () => {
+
+        if (!chatInput.trim()) {
+            return;
+        }
+
+        const userMessage = {
+            role: "user",
+            content: chatInput
+        };
+
+        setMessages(prev => [...prev, userMessage]);
+
+        const currentInput = chatInput;
+
+        setChatInput("");
+
+        const response = await fetch(
+            "http://localhost:3000/api/ai/chat",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: currentInput
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        setMessages(prev => [
+            ...prev,
+            {
+                role: "assistant",
+                content: data.message
+            }
+        ]);
+    };
+    //OPEN AI END
+
     return (
         <div className="min-h-screen bg-slate-50 p-8">
             <div className="max-w-3xl mx-auto">
@@ -105,6 +148,7 @@ export default function CreateTicket() {
                                 />
 
                                 <button
+                                    onClick={sendMessage}
                                     className="bg-blue-600 text-white px-4 rounded"
                                 >
                                     Invia

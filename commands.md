@@ -72,6 +72,8 @@ git clean -fd
 ---------
 
  git rev-parse --show-toplevel
- 
+
 cd ticketing-app
 npm install openai
+
+npm list openai
