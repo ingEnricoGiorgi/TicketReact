@@ -3,17 +3,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+type Message = {
+    role: "user" | "assistant";
+    content: string;
+};
+
 export default function CreateTicket() {
 
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
-    const [messages, setMessages] = useState([
-        {
-            role: "assistant",
-            content: "Ciao! Descrivi il problema che stai riscontrando."
-        }
-    ]);
+    const [messages, setMessages] = useState<Message[]>([
+    {
+        role: "assistant",
+        content: "Ciao! Descrivi il problema che stai riscontrando."
+    }
+]);
     const [chatInput, setChatInput] = useState("");
 
     const createTicket = async () => {
@@ -58,7 +63,7 @@ export default function CreateTicket() {
             return;
         }
 
-        const userMessage = {
+        const userMessage: Message = {
             role: "user",
             content: chatInput
         };
@@ -69,28 +74,43 @@ export default function CreateTicket() {
 
         setChatInput("");
 
-        const response = await fetch(
-            "http://localhost:3000/api/ai/chat",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    message: currentInput
-                })
-            }
-        );
+        try {
 
-        const data = await response.json();
+            const response = await fetch(
+                "http://localhost:3000/api/ai/chat",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: currentInput
+                    })
+                }
+            );
 
-        setMessages(prev => [
-            ...prev,
-            {
-                role: "assistant",
-                content: data.message
-            }
-        ]);
+            const data = await response.json();
+
+            setMessages(prev => [
+                ...prev,
+                {
+                    role: "assistant",
+                    content: data.message
+                }
+            ]);
+
+        } catch (error) {
+
+            setMessages(prev => [
+                ...prev,
+                {
+                    role: "assistant",
+                    content: "Si è verificato un errore."
+                }
+            ]);
+
+            console.error(error);
+        }
     };
     //OPEN AI END
 
@@ -169,6 +189,34 @@ export default function CreateTicket() {
                                 placeholder="Es. Problema login Magento"
                             />
                         </div>
+                        <div>
+                            <label className="text-sm font-medium">
+                                Categoria
+                            </label>
+
+                            <Input
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                placeholder="Es. Login, Database, Magento..."
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium">
+                                Descrizione
+                            </label>
+
+                            <Textarea
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="Descrivi il problema"
+                            />
+                        </div>
+                        <button
+                            onClick={createTicket}
+                            className="bg-green-600 text-white px-4 py-2 rounded"
+                        >
+                            Crea Ticket
+                        </button>
 
                     </CardContent>
                 </Card>

@@ -2,8 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
 const axios = require('axios');
-
+const OpenAI = require("openai");
+require("dotenv").config();
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
 const app = express();
+
+
 
 app.use(express.json());
 app.use(cors());
@@ -59,6 +65,36 @@ app.post('/api/tickets', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Backend OK');
 });
+
+//openAI start
+app.post('/api/ai/chat', async (req, res) => {
+
+    try {
+
+        const { message } = req.body;
+
+        const response = await openai.responses.create({
+            model: 'gpt-5-mini',
+            input: message
+        });
+
+        res.json({
+            success: true,
+            message: response.output_text
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+//openAi end
+
 
 app.listen(3000, () => {
     console.log('Server running on port 3000');
