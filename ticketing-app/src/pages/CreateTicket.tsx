@@ -8,6 +8,13 @@ export default function CreateTicket() {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
+    const [messages, setMessages] = useState([
+        {
+            role: "assistant",
+            content: "Ciao! Descrivi il problema che stai riscontrando."
+        }
+    ]);
+    const [chatInput, setChatInput] = useState("");
 
     const createTicket = async () => {
 
@@ -57,13 +64,61 @@ export default function CreateTicket() {
                         <CardTitle>Apri una richiesta</CardTitle>
                     </CardHeader>
 
+                    
                     <CardContent className="space-y-4">
+
+                        {/* CHATBOT */}
+                        <div className="border rounded-lg p-4">
+
+                            <h3 className="font-semibold mb-4">
+                                Assistente AI
+                            </h3>
+
+                            <div className="h-64 overflow-y-auto border rounded p-3 mb-4">
+                                {messages.map((message, index) => (
+                                    <div
+                                        key={index}
+                                        className={`mb-2 ${
+                                            message.role === "user"
+                                                ? "text-right"
+                                                : "text-left"
+                                        }`}
+                                    >
+                                        <span
+                                            className={`inline-block p-2 rounded-lg ${
+                                                message.role === "user"
+                                                    ? "bg-blue-500 text-white"
+                                                    : "bg-gray-200"
+                                            }`}
+                                        >
+                                            {message.content}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="flex gap-2">
+                                <Input
+                                    value={chatInput}
+                                    onChange={(e) => setChatInput(e.target.value)}
+                                    placeholder="Descrivi il problema..."
+                                />
+
+                                <button
+                                    className="bg-blue-600 text-white px-4 rounded"
+                                >
+                                    Invia
+                                </button>
+                            </div>
+                        </div>
+                        {/* FINE CHATBOT */}
+                        
+                        {/* FORM TICKET */}
 
                         <div>
                             <label className="text-sm font-medium">
                                 Titolo
                             </label>
-
                             <Input
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
@@ -71,43 +126,8 @@ export default function CreateTicket() {
                             />
                         </div>
 
-                        <div>
-                            <label className="text-sm font-medium">
-                                Categoria
-                            </label>
-
-                            <Input
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                                placeholder="Magento, Laravel, Server..."
-                            />
-                        </div>
-
-                        <div>
-                            <label className="text-sm font-medium">
-                                Descrizione
-                            </label>
-
-                            <Textarea
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                placeholder="Descrivi il problema..."
-                                className="min-h-40"
-                            />
-                        </div>
-
-                        <div className="flex justify-end">
-                            <button
-                                onClick={createTicket}
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
-                            >
-                                Crea Ticket
-                            </button>
-                        </div>
-
                     </CardContent>
                 </Card>
-
             </div>
         </div>
     );
