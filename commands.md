@@ -65,3 +65,13 @@ npm install cors
 --------------------------------------------------------n8n-----------------------------------
 
 npm install -g n8n    GLOBALMENTE
+
+------------- cd ..
+
+git clean -fd
+---------
+
+ git rev-parse --show-toplevel
+ 
+cd ticketing-app
+npm install openai
